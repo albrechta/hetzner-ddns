@@ -12,6 +12,8 @@ record_name=${HETZNER_RECORD_NAME:-''}
 record_ttl=${HETZNER_RECORD_TTL:-'60'}
 record_type=${HETZNER_RECORD_TYPE:-'A'}
 
+notification_recipient=${NOTIFICATION_RECIPIENT:-''}
+
 display_help() {
   cat <<EOF
 
@@ -39,6 +41,12 @@ example:
 
 EOF
   exit 1
+}
+
+notification() {
+  if [[ "${notification_recipient}" != "" ]]; then
+    printf "%s\n" "Subject: $1" "$2" | msmtp "${notification_recipient}" ;
+  fi
 }
 
 logger() {
@@ -184,8 +192,10 @@ else
          }'
     if [[ $? != 0 ]]; then
       logger Error "Unable to update record: \"${record_name}\""
+      notification "DNS Update: unable to update record: \"${record_name}\"" "DNS update: \"${record_name}\"\nCurrent public IP address: ${cur_pub_addr}\nDNS IP address: ${cur_dyn_addr}"
     else
       logger Info "DNS record \"${record_name}\" updated successfully"
+      notification "DNS Update: successfully updated record: \"${record_name}\"" "DNS update: \"${record_name}\"\nCurrent public IP address: ${cur_pub_addr}\nDNS IP address: ${cur_dyn_addr}"
     fi
   fi
 fi

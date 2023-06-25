@@ -3,6 +3,7 @@ FROM alpine:latest
 RUN apk add --no-cache curl
 RUN apk add --no-cache bind-tools
 RUN apk add --no-cache jq
+RUN apk add --no-cache msmtp
 RUN apk update && apk upgrade --no-cache
 
 COPY dyndns.sh /dyndns.sh
