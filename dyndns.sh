@@ -192,10 +192,10 @@ else
          }'
     if [[ $? != 0 ]]; then
       logger Error "Unable to update record: \"${record_name}\""
-      notification "DNS Update: unable to update record: \"${record_name}\"" "DNS update: \"${record_name}\"\nCurrent public IP address: ${cur_pub_addr}\nDNS IP address: ${cur_dyn_addr}"
+      notification "DNS Update - unable to update record: ${record_name}" "DNS record: ${record_name}" "Current public IP address: ${cur_pub_addr}" "DNS IP address: ${cur_dyn_addr}"
     else
       logger Info "DNS record \"${record_name}\" updated successfully"
-      notification "DNS Update: successfully updated record: \"${record_name}\"" "DNS update: \"${record_name}\"\nCurrent public IP address: ${cur_pub_addr}\nDNS IP address: ${cur_dyn_addr}"
+      notification "DNS Update - successfully updated record: ${record_name}" "DNS record: ${record_name}" "Current public IP address: ${cur_pub_addr}" "DNS IP address: ${cur_dyn_addr}"
     fi
   fi
 fi
